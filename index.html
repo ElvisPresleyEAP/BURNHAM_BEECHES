@@ -463,9 +463,15 @@
             background: #ffffff;
             color: #000000;
         }
+        .tee-select.tee-none { background: #eeeeee; color: #555555; }
         .tee-select.tee-white { background: #ffffff; color: #000000; }
         .tee-select.tee-yellow { background: #FFD700; color: #000000; }
         .tee-select.tee-red { background: #c40000; color: #ffffff; }
+        .tee-players { display: block; font-size: 9px; font-weight: bold; min-height: 11px; letter-spacing: 1px; }
+        .player-score.tee-none { }
+        .player-score.tee-white { box-shadow: inset 0 -3px 0 #bbbbbb; }
+        .player-score.tee-yellow { box-shadow: inset 0 -3px 0 #FFD700; }
+        .player-score.tee-red { box-shadow: inset 0 -3px 0 #c40000; }
         .tee-dot { display: block; margin: 2px auto 0; border: 1px solid #333; }
         h3 { margin: 5px 0; font-size: 14px; }
         /* ─── WebKit (iPhone) specific fixes ─────────────────────────────── */
@@ -600,28 +606,28 @@
                         <td><input type="text" id="playerA" placeholder="Name" style="width:100%;" oninput="updatePlayerHeader('A'); updateDividerPlayerNames();"></td>
                         <td><input type="number" id="hcapA" class="handicap-input" style="width:100%;text-align:center;" placeholder="0" onchange="calculatePlayingHcapForPlayer('A')"></td>
                         <td><input type="number" id="playingHcapA" style="width:100%;text-align:center;" value="0" onchange="recalculatePlayerScores('A')"></td>
-                        <td><select id="teeA" class="tee-select tee-white" onchange="updatePlayerTee('A')"><option value="white">White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
+                        <td><select id="teeA" class="tee-select tee-white" onchange="updatePlayerTee('A')"><option value="white" selected>White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
                     </tr>
                     <tr>
                         <td>Player B</td>
                         <td><input type="text" id="playerB" placeholder="Name" style="width:100%;" oninput="updatePlayerHeader('B'); updateDividerPlayerNames();"></td>
                         <td><input type="number" id="hcapB" class="handicap-input" style="width:100%;text-align:center;" placeholder="0" onchange="calculatePlayingHcapForPlayer('B')"></td>
                         <td><input type="number" id="playingHcapB" style="width:100%;text-align:center;" value="0" onchange="recalculatePlayerScores('B')"></td>
-                        <td><select id="teeB" class="tee-select tee-white" onchange="updatePlayerTee('B')"><option value="white">White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
+                        <td><select id="teeB" class="tee-select tee-white" onchange="updatePlayerTee('B')"><option value="white" selected>White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
                     </tr>
                     <tr>
                         <td>Player C</td>
                         <td><input type="text" id="playerC" placeholder="Name" style="width:100%;" oninput="updatePlayerHeader('C'); updateDividerPlayerNames();"></td>
                         <td><input type="number" id="hcapC" class="handicap-input" style="width:100%;text-align:center;" placeholder="0" onchange="calculatePlayingHcapForPlayer('C')"></td>
                         <td><input type="number" id="playingHcapC" style="width:100%;text-align:center;" value="0" onchange="recalculatePlayerScores('C')"></td>
-                        <td><select id="teeC" class="tee-select tee-white" onchange="updatePlayerTee('C')"><option value="white">White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
+                        <td><select id="teeC" class="tee-select tee-white" onchange="updatePlayerTee('C')"><option value="white" selected>White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
                     </tr>
                     <tr>
                         <td>Player D</td>
                         <td><input type="text" id="playerD" placeholder="Name" style="width:100%;" oninput="updatePlayerHeader('D'); updateDividerPlayerNames();"></td>
                         <td><input type="number" id="hcapD" class="handicap-input" style="width:100%;text-align:center;" placeholder="0" onchange="calculatePlayingHcapForPlayer('D')"></td>
                         <td><input type="number" id="playingHcapD" style="width:100%;text-align:center;" value="0" onchange="recalculatePlayerScores('D')"></td>
-                        <td><select id="teeD" class="tee-select tee-white" onchange="updatePlayerTee('D')"><option value="white">White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
+                        <td><select id="teeD" class="tee-select tee-white" onchange="updatePlayerTee('D')"><option value="white" selected>White</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
                     </tr>
                 </table>
             </div>
@@ -663,18 +669,18 @@
             <thead>
                 <tr>
                     <th>Hole</th>
-                    <th class="yards-white">White<br>Yards</th>
-                    <th class="yards-yellow">Yellow<br>Yards</th>
-                    <th>Par</th>
-                    <th class="si-col">SI</th>
+                    <th class="yards-white">White<br>Yards<span class="tee-players" id="teePlayersWhite"></span></th>
+                    <th class="yards-yellow">Yellow<br>Yards<span class="tee-players" id="teePlayersYellow"></span></th>
+                    <th>Par<span class="tee-players" id="teePlayersParMain"></span></th>
+                    <th class="si-col">SI<span class="tee-players" id="teePlayersSIMain"></span></th>
                     <th id="headerA">Player A</th>
                     <th id="headerB">Player B</th>
                     <th id="headerC">Player C</th>
                     <th id="headerD">Player D</th>
                     <th class="wlh-col">W/L/H<br>Pts</th>
-                    <th class="yards-red">Red<br>Yards</th>
-                    <th class="par-red">Par</th>
-                    <th class="si-red">SI</th>
+                    <th class="yards-red">Red<br>Yards<span class="tee-players" id="teePlayersRed"></span></th>
+                    <th class="par-red">Par<span class="tee-players" id="teePlayersParRed"></span></th>
+                    <th class="si-red">SI<span class="tee-players" id="teePlayersSIRed"></span></th>
                 </tr>
             </thead>
             <tbody id="frontNine"></tbody>
@@ -1086,9 +1092,13 @@ function getPlayerTee(p) {
   const el = document.getElementById("tee" + p);
   return el && courseRatings[el.value] ? el.value : "white";
 }
+function getPlayerTeeRaw(p) {
+  const el = document.getElementById("tee" + p);
+  return el && courseRatings[el.value] ? el.value : "white";
+}
 function getAllTees() {
   const t = {};
-  players.forEach(p => t[p] = getPlayerTee(p));
+  players.forEach(p => t[p] = getPlayerTeeRaw(p));
   return t;
 }
 function getSelectedTee() {
@@ -1097,7 +1107,7 @@ function getSelectedTee() {
 }
 function applyTeeStyle(p) {
   const el = document.getElementById("tee" + p);
-  if (el) el.className = "tee-select tee-" + getPlayerTee(p);
+  if (el) el.className = "tee-select tee-" + (getPlayerTeeRaw(p) || "none");
 }
 function syncTeeRadios() {
   const t = getAllTees();
@@ -1111,22 +1121,54 @@ function renderHeader(p) {
   const header = document.getElementById("header" + p);
   if (!header) return;
   header.textContent = (input && input.value.trim()) || "Player " + p;
+  const raw = getPlayerTeeRaw(p);
+  if (!raw) return;
   const dot = document.createElement("span");
   dot.className = "key-dot tee-dot";
-  dot.style.background = TEE_COLOURS[getPlayerTee(p)];
+  dot.style.background = TEE_COLOURS[raw];
   header.appendChild(dot);
 }
+function applyScoreCellTee(p) {
+  const tee = getPlayerTeeRaw(p) || "none";
+  for (let h = 1; h <= 18; h++) {
+    const td = document.getElementById("score_" + p + "_" + h);
+    if (td) td.className = "player-score tee-" + tee;
+  }
+}
+function updateTeeColumnLabels() {
+  const on = tees => players.filter(p => tees.includes(getPlayerTeeRaw(p))).join(" ");
+  const set = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+  set("teePlayersWhite", on(["white"]));
+  set("teePlayersYellow", on(["yellow"]));
+  set("teePlayersRed", on(["red"]));
+  set("teePlayersParMain", on(["white", "yellow"]));
+  set("teePlayersSIMain", on(["white", "yellow"]));
+  set("teePlayersParRed", on(["red"]));
+  set("teePlayersSIRed", on(["red"]));
+}
+const lastTee = {};
+function retargetPlayingHcap(p) {
+  const cur = getPlayerTee(p);
+  const prev = lastTee[p] || "white";
+  const ph = document.getElementById("playingHcap" + p);
+  const hcapRaw = document.getElementById("hcap" + p).value;
+  if (hcapRaw !== "") {
+    ph.value = calculatePlayingHcap(parseFloat(hcapRaw) || 0, cur);
+  } else if (prev !== cur && (parseInt(ph.value) || 0) !== 0) {
+    const r = courseRatings[prev];
+    const idx = (parseFloat(ph.value) - (r.cr - r.par)) / (r.slope / 113);
+    ph.value = calculatePlayingHcap(idx, cur);
+  }
+}
 function refreshTeeUI() {
-  players.forEach(p => { applyTeeStyle(p); renderHeader(p); });
+  players.forEach(p => { applyTeeStyle(p); renderHeader(p); applyScoreCellTee(p); lastTee[p] = getPlayerTee(p); });
+  updateTeeColumnLabels();
   syncTeeRadios();
   updateDividerPlayerNames();
 }
 function updatePlayerTee(p) {
   applyTeeStyle(p);
-  const hcap = parseFloat(document.getElementById("hcap" + p).value) || 0;
-  if (hcap > 0) {
-    document.getElementById("playingHcap" + p).value = calculatePlayingHcap(hcap, getPlayerTee(p));
-  }
+  retargetPlayingHcap(p);
   recalculatePlayerScores(p);
   refreshTeeUI();
   saveData();
@@ -1245,7 +1287,7 @@ function calculateAllStableford() {
   players.forEach(_0x2e559c => {
     const _0x3b78d5 = document.getElementById("hcap" + _0x2e559c);
     const _0x409ef3 = _0x3b78d5 ? parseFloat(_0x3b78d5.value) || 0 : 0;
-    if (_0x409ef3 > 0) {
+    if (_0x3b78d5 && _0x3b78d5.value !== "") {
       document.getElementById("playingHcap" + _0x2e559c).value = calculatePlayingHcap(_0x409ef3, getPlayerTee(_0x2e559c));
     }
     for (let _0x55a2ce = 1; _0x55a2ce <= 18; _0x55a2ce++) {
@@ -1294,7 +1336,7 @@ function updateTeeSelection() {
   let tee = "white";
   if (document.getElementById("teeYellow").checked) tee = "yellow";
   if (document.getElementById("teeRed").checked) tee = "red";
-  players.forEach(p => { document.getElementById("tee" + p).value = tee; });
+  players.forEach(p => { document.getElementById("tee" + p).value = tee; retargetPlayingHcap(p); });
   refreshTeeUI();
   calculateAllStableford();
 }
@@ -1415,6 +1457,7 @@ function saveData() {
     finishTime: document.getElementById("finishTime")?.value || "",
     tee: getSelectedTee(),
     tees: getAllTees(),
+    teeVersion: 4,
     courseData: courseData,
     players: {},
     scores: scores,
@@ -1454,10 +1497,13 @@ function loadData() {
         document.getElementById("finishTime").value = _0x451ff6.finishTime;
       }
       {
-        const savedTees = _0x451ff6.tees || (_0x451ff6.tee ? {A: _0x451ff6.tee, B: _0x451ff6.tee, C: _0x451ff6.tee, D: _0x451ff6.tee} : null);
+        let savedTees = _0x451ff6.tees || (_0x451ff6.tee ? {A: _0x451ff6.tee, B: _0x451ff6.tee, C: _0x451ff6.tee, D: _0x451ff6.tee} : null);
+        if (_0x451ff6.teeVersion !== 4) {
+          savedTees = null;
+        }
         if (savedTees) {
           players.forEach(p => {
-            if (courseRatings[savedTees[p]]) document.getElementById("tee" + p).value = savedTees[p];
+            document.getElementById("tee" + p).value = courseRatings[savedTees[p]] ? savedTees[p] : "white";
           });
         }
         refreshTeeUI();
